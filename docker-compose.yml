@@ -1,0 +1,20 @@
+version: '2'
+services:
+  rabbitmq:
+    build: src/rabbitMQ/
+    hostname: "awslike-rabbitmq-1"
+    ports:
+      - "5672:5672"
+      - "9090:15672"
+
+  rabbitmq-rpc-server:
+    build: src/rabbitServer/
+    links: 
+      - rabbitmq
+
+  rabbitmq-rpc-client:
+    build: src/rabbitClient/
+    links: 
+      - rabbitmq
+      - rabbitmq-rpc-server
+
